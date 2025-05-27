@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    {% set texts = {
+        'uk': {
+            'title': "Калькулятор PocketCombats",
+            'level': "Рівень персонажа",
+            'strength': "Сила",
+            'dexterity': "Спритність",
+            'intuition': "Інтуїція",
+            'endurance': "Живучість",
+            'wisdom': "Мудрість",
+            'luck': "Удача",
+            'profession': "Клас персонажа",
+            'submit': "Розрахувати",
+            'total_attr': "Всього атрибутів",
+            'remaining_attr': "Залишилось нерозподілених",
+            'health': "Життя",
+            'mana': "Мана",
+            'classes': {
+                'mag': "Маг",
+                'warrior': "Воїн",
+                'hunter': "Мисливець",
+                'novice': "Новачок"
+            }
+        },
+        'ru': {
+            'title': "Калькулятор PocketCombats",
+            'level': "Уровень персонажа",
+            'strength': "Сила",
+            'dexterity': "Ловкость",
+            'intuition': "Интуиция",
+            'endurance': "Живучесть",
+            'wisdom': "Мудрость",
+            'luck': "Удача",
+            'profession': "Класс персонажа",
+            'submit': "Рассчитать",
+            'total_attr': "Всего атрибутов",
+            'remaining_attr': "Осталось нераспределенных",
+            'health': "Жизнь",
+            'mana': "Мана",
+            'classes': {
+                'mag': "Маг",
+                'warrior': "Воин",
+                'hunter': "Охотник",
+                'novice': "Новичок"
+            }
+        },
+        'en': {
+            'title': "PocketCombats Calculator",
+            'level': "Character level",
+            'strength': "Strength",
+            'dexterity': "Dexterity",
+            'intuition': "Intuition",
+            'endurance': "Endurance",
+            'wisdom': "Wisdom",
+            'luck': "Luck",
+            'profession': "Character class",
+            'submit': "Calculate",
+            'total_attr': "Total attributes",
+            'remaining_attr': "Remaining unassigned",
+            'health': "Health",
+            'mana': "Mana",
+            'classes': {
+                'mag': "Mage",
+                'warrior': "Warrior",
+                'hunter': "Hunter",
+                'novice': "Novice"
+            }
+        },
+        'kk': {
+            'title': "PocketCombats калькуляторы",
+            'level': "Деңгей",
+            'strength': "Күш",
+            'dexterity': "Шапшаңдық",
+            'intuition': "Түйсік",
+            'endurance': "Төзімділік",
+            'wisdom': "Даналық",
+            'luck': "Сәттілік",
+            'profession': "Кейіпкер сыныбы",
+            'submit': "Есептеу",
+            'total_attr': "Жалпы атрибуттар",
+            'remaining_attr': "Бөлінбеген атрибуттар",
+            'health': "Өмір",
+            'mana': "Мана",
+            'classes': {
+                'mag': "Сиқыршы",
+                'warrior': "Жауынгер",
+                'hunter': "Аңшы",
+                'novice': "Жаңадан бастаушы"
+            }
+        }
+    } %}
+    <title>{{ texts[lang]['title'] }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef3f7; padding: 2rem; }
+        h1 { color: #333; text-align: center; }
+        form { background: #fff; padding: 1rem; border-radius: 8px; max-width: 500px; margin: auto; }
+        input, select, button { width: 100%; margin-bottom: 1rem; padding: 0.5rem; }
+        .result { background: #dff0d8; padding: 1rem; margin-top: 1rem; border-radius: 8px; }
+        .lang-select { text-align: right; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-select">
+        <form method="get">
+            <select name="lang" onchange="this.form.submit()">
+                <option value="uk" {% if lang == 'uk' %}selected{% endif %}>Українська</option>
+                <option value="ru" {% if lang == 'ru' %}selected{% endif %}>Русский</option>
+                <option value="en" {% if lang == 'en' %}selected{% endif %}>English</option>
+                <option value="kk" {% if lang == 'kk' %}selected{% endif %}>Қазақша</option>
+            </select>
+        </form>
+    </div>
+
+    <h1>{{ texts[lang]['title'] }}</h1>
+
+    <form method="post">
+        <label>{{ texts[lang]['level'] }}:</label>
+        <input type="number" name="level" min="1" max="150" value="{{ request.form.level or 1 }}">
+
+        <label>{{ texts[lang]['strength'] }}:</label>
+        <input type="number" name="strength" min="1" max="200" value="{{ request.form.strength or 1 }}">
+
+        <label>{{ texts[lang]['dexterity'] }}:</label>
+        <input type="number" name="dexterity" min="1" max="200" value="{{ request.form.dexterity or 1 }}">
+
+        <label>{{ texts[lang]['intuition'] }}:</label>
+        <input type="number" name="intuition" min="1" max="200" value="{{ request.form.intuition or 1 }}">
+
+        <label>{{ texts[lang]['endurance'] }}:</label>
+        <input type="number" name="endurance" min="1" max="200" value="{{ request.form.endurance or 1 }}">
+
+        <label>{{ texts[lang]['wisdom'] }}:</label>
+        <input type="number" name="wisdom" min="1" max="200" value="{{ request.form.wisdom or 1 }}">
+
+        <label>{{ texts[lang]['luck'] }}:</label>
+        <input type="number" name="luck" min="1" max="200" value="{{ request.form.luck or 1 }}">
+
+        <label>{{ texts[lang]['profession'] }}:</label>
+        <select name="profession">
+            <option value="mag" {% if request.form.profession == 'mag' %}selected{% endif %}>{{ texts[lang]['classes']['mag'] }}</option>
+            <option value="warrior" {% if request.form.profession == 'warrior' %}selected{% endif %}>{{ texts[lang]['classes']['warrior'] }}</option>
+            <option value="hunter" {% if request.form.profession == 'hunter' %}selected{% endif %}>{{ texts[lang]['classes']['hunter'] }}</option>
+            <option value="novice" {% if request.form.profession == 'novice' %}selected{% endif %}>{{ texts[lang]['classes']['novice'] }}</option>
+        </select>
+
+        <button type="submit">{{ texts[lang]['submit'] }}</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <p><strong>{{ texts[lang]['total_attr'] }}:</strong> {{ result.total_attributes }}</p>
+        <p><strong>{{ texts[lang]['remaining_attr'] }}:</strong> {{ result.remaining_attributes }}</p>
+        <p><strong>{{ texts[lang]['health'] }}:</strong> {{ result.health }}</p>
+        <p><strong>{{ texts[lang]['mana'] }}:</strong> {{ result.mana }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
