@@ -94,12 +94,64 @@
     } %}
     <title>{{ texts[lang]['title'] }}</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #eef3f7; padding: 2rem; }
-        h1 { color: #333; text-align: center; }
-        form { background: #fff; padding: 1rem; border-radius: 8px; max-width: 500px; margin: auto; }
-        input, select, button { width: 100%; margin-bottom: 1rem; padding: 0.5rem; }
-        .result { background: #dff0d8; padding: 1rem; margin-top: 1rem; border-radius: 8px; }
-        .lang-select { text-align: right; margin-bottom: 1rem; }
+        body {
+            font-family: Georgia, serif;
+            background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            padding: 2rem;
+            color: #fdf5e6;
+        }
+        h1 {
+            text-align: center;
+            color: #fff9dc;
+            text-shadow: 1px 1px 3px #000;
+        }
+        .lang-select {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        .lang-select select {
+            width: auto;
+            padding: 0.4rem;
+            font-size: 1rem;
+        }
+        input[type=number],
+        select,
+        button {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: none;
+        }
+        .layout {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+        .side-banner img {
+            max-width: 660px;
+            width: 100%;
+            border-radius: 8px;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+        }
+        .result {
+            background: rgba(0, 128, 0, 0.4);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+        .form-container form > * {
+            margin-bottom: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -117,47 +169,59 @@
 
     <h1>{{ texts[lang]['title'] }}</h1>
 
-    <form method="post">
-        <label>{{ texts[lang]['level'] }}:</label>
-        <input type="number" name="level" min="1" max="150" value="{{ request.form.level or 1 }}">
+    <div class="layout">
+        <div class="side-banner">
+            <img src="{{ url_for('static', filename='left.jpg') }}" alt="Левый баннер">
+        </div>
 
-        <label>{{ texts[lang]['strength'] }}:</label>
-        <input type="number" name="strength" min="1" max="200" value="{{ request.form.strength or 1 }}">
+        <div class="form-container">
+            <form method="post">
+                <label>{{ texts[lang]['level'] }}:</label>
+                <input type="number" name="level" min="1" max="150" value="{{ request.form.level or 1 }}">
 
-        <label>{{ texts[lang]['dexterity'] }}:</label>
-        <input type="number" name="dexterity" min="1" max="200" value="{{ request.form.dexterity or 1 }}">
+                <label>{{ texts[lang]['strength'] }}:</label>
+                <input type="number" name="strength" min="1" max="200" value="{{ request.form.strength or 1 }}">
 
-        <label>{{ texts[lang]['intuition'] }}:</label>
-        <input type="number" name="intuition" min="1" max="200" value="{{ request.form.intuition or 1 }}">
+                <label>{{ texts[lang]['dexterity'] }}:</label>
+                <input type="number" name="dexterity" min="1" max="200" value="{{ request.form.dexterity or 1 }}">
 
-        <label>{{ texts[lang]['endurance'] }}:</label>
-        <input type="number" name="endurance" min="1" max="200" value="{{ request.form.endurance or 1 }}">
+                <label>{{ texts[lang]['intuition'] }}:</label>
+                <input type="number" name="intuition" min="1" max="200" value="{{ request.form.intuition or 1 }}">
 
-        <label>{{ texts[lang]['wisdom'] }}:</label>
-        <input type="number" name="wisdom" min="1" max="200" value="{{ request.form.wisdom or 1 }}">
+                <label>{{ texts[lang]['endurance'] }}:</label>
+                <input type="number" name="endurance" min="1" max="200" value="{{ request.form.endurance or 1 }}">
 
-        <label>{{ texts[lang]['luck'] }}:</label>
-        <input type="number" name="luck" min="1" max="200" value="{{ request.form.luck or 1 }}">
+                <label>{{ texts[lang]['wisdom'] }}:</label>
+                <input type="number" name="wisdom" min="1" max="200" value="{{ request.form.wisdom or 1 }}">
 
-        <label>{{ texts[lang]['profession'] }}:</label>
-        <select name="profession">
-            <option value="mag" {% if request.form.profession == 'mag' %}selected{% endif %}>{{ texts[lang]['classes']['mag'] }}</option>
-            <option value="warrior" {% if request.form.profession == 'warrior' %}selected{% endif %}>{{ texts[lang]['classes']['warrior'] }}</option>
-            <option value="hunter" {% if request.form.profession == 'hunter' %}selected{% endif %}>{{ texts[lang]['classes']['hunter'] }}</option>
-            <option value="novice" {% if request.form.profession == 'novice' %}selected{% endif %}>{{ texts[lang]['classes']['novice'] }}</option>
-        </select>
+                <label>{{ texts[lang]['luck'] }}:</label>
+                <input type="number" name="luck" min="1" max="200" value="{{ request.form.luck or 1 }}">
 
-        <button type="submit">{{ texts[lang]['submit'] }}</button>
-    </form>
+                <label>{{ texts[lang]['profession'] }}:</label>
+                <select name="profession">
+                    <option value="mag" {% if request.form.profession == 'mag' %}selected{% endif %}>{{ texts[lang]['classes']['mag'] }}</option>
+                    <option value="warrior" {% if request.form.profession == 'warrior' %}selected{% endif %}>{{ texts[lang]['classes']['warrior'] }}</option>
+                    <option value="hunter" {% if request.form.profession == 'hunter' %}selected{% endif %}>{{ texts[lang]['classes']['hunter'] }}</option>
+                    <option value="novice" {% if request.form.profession == 'novice' %}selected{% endif %}>{{ texts[lang]['classes']['novice'] }}</option>
+                </select>
 
-    {% if result %}
-    <div class="result">
-        <p><strong>{{ texts[lang]['total_attr'] }}:</strong> {{ result.total_attributes }}</p>
-        <p><strong>{{ texts[lang]['remaining_attr'] }}:</strong> {{ result.remaining_attributes }}</p>
-        <p><strong>{{ texts[lang]['health'] }}:</strong> {{ result.health }}</p>
-        <p><strong>{{ texts[lang]['mana'] }}:</strong> {{ result.mana }}</p>
+                <button type="submit">{{ texts[lang]['submit'] }}</button>
+            </form>
+
+            {% if result %}
+            <div class="result">
+                <p><strong>{{ texts[lang]['total_attr'] }}:</strong> {{ result.total_attributes }}</p>
+                <p><strong>{{ texts[lang]['remaining_attr'] }}:</strong> {{ result.remaining_attributes }}</p>
+                <p><strong>{{ texts[lang]['health'] }}:</strong> {{ result.health }}</p>
+                <p><strong>{{ texts[lang]['mana'] }}:</strong> {{ result.mana }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="side-banner">
+            <img src="{{ url_for('static', filename='right.jpg') }}" alt="Правый баннер">
+        </div>
     </div>
-    {% endif %}
+
 </body>
 </html>
-
