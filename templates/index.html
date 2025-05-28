@@ -152,6 +152,12 @@
         .form-container form > * {
             margin-bottom: 1.2rem;
         }
+        .elfsight-wrapper {
+            position: fixed;
+            bottom: 20px; /* Отступ от нижнего края */
+            right: 20px;  /* Отступ от правого края */
+            z-index: 999; /* Чтобы виджет был поверх других элементов */
+        }
     </style>
 </head>
 <body>
@@ -221,6 +227,11 @@
         <div class="side-banner">
             <img src="{{ url_for('static', filename='right.jpg') }}" alt="Правый баннер">
         </div>
+    </div>
+    <!-- Elfsight Number Counter | Untitled Number Counter -->
+    <div class="elfsight-wrapper">
+        <script src="https://static.elfsight.com/platform/platform.js" async></script>
+        <div class="elfsight-app-5f56eb85-e9c7-466d-954d-2f1aeb63272b" data-elfsight-app-lazy></div>
     </div>
 
 </body>
